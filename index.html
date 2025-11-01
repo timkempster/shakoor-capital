@@ -336,7 +336,13 @@
             const formMessage = document.getElementById('formMessage');
             const submitButton = this.querySelector('.form-submit');
 
-            // Check if reCAPTCHA is completed
+            // Check if reCAPTCHA is loaded and completed
+            if (typeof grecaptcha === 'undefined') {
+                formMessage.className = 'form-message error';
+                formMessage.textContent = 'reCAPTCHA is still loading. Please wait a moment and try again.';
+                return;
+            }
+
             const recaptchaResponse = grecaptcha.getResponse();
             if (!recaptchaResponse) {
                 formMessage.className = 'form-message error';
@@ -347,6 +353,7 @@
             // Disable submit button
             submitButton.disabled = true;
             submitButton.textContent = 'Sending...';
+            formMessage.className = 'form-message';
             formMessage.style.display = 'none';
 
             try {
@@ -365,9 +372,11 @@
                     this.reset();
                     grecaptcha.reset();
                 } else {
-                    throw new Error('Form submission failed');
+                    const data = await response.json();
+                    throw new Error(data.error || 'Form submission failed');
                 }
             } catch (error) {
+                console.error('Form submission error:', error);
                 formMessage.className = 'form-message error';
                 formMessage.textContent = 'There was a problem submitting your message. Please try again or contact us directly at was_shakoor@hotmail.com';
             } finally {
