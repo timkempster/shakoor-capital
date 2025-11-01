@@ -1,0 +1,81 @@
+CONTACT FORM SETUP INSTRUCTIONS
+================================
+
+Your contact form has been added to the website! To make it fully functional, you need to complete two quick setup steps:
+
+STEP 1: Set up Formspree (handles email delivery)
+--------------------------------------------------
+1. Go to https://formspree.io/
+2. Click "Get Started" and sign up for a FREE account (no credit card required)
+3. Once logged in, click "New Form"
+4. Give it a name like "Shakoor Capital Contact Form"
+5. In the "Email" field, enter: was_shakoor@hotmail.com
+6. Click "Create Form"
+7. You'll see a form endpoint that looks like: https://formspree.io/f/xyzabc123
+8. Copy the full URL
+
+9. Open index.html and find this line (around line 296):
+   <form id="contactForm" class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+
+10. Replace "YOUR_FORM_ID" with your actual form ID (just the part after /f/)
+    Example: If your endpoint is https://formspree.io/f/xyzabc123
+    Change to: action="https://formspree.io/f/xyzabc123"
+
+
+STEP 2: Set up Google reCAPTCHA (spam protection)
+-------------------------------------------------
+1. Go to https://www.google.com/recaptcha/admin/create
+2. Log in with your Google account
+3. Fill out the form:
+   - Label: Shakoor Capital Contact Form
+   - reCAPTCHA type: Select "reCAPTCHA v2" → "I'm not a robot" Checkbox
+   - Domains: Add these domains:
+     * shakoorcapital.com
+     * timkempster.github.io
+   - Accept the terms and click "Submit"
+
+4. You'll see two keys:
+   - Site Key (starts with 6L...)
+   - Secret Key (keep this private)
+
+5. Copy the SITE KEY
+
+6. Open index.html and find this line (around line 313):
+   <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY"></div>
+
+7. Replace "YOUR_RECAPTCHA_SITE_KEY" with your actual site key
+   Example: data-sitekey="6LcXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+
+8. In your Formspree dashboard, go to your form settings
+9. Look for "Integrations" or "Spam Protection"
+10. Add your reCAPTCHA SECRET KEY there
+
+
+STEP 3: Test and Deploy
+------------------------
+1. Save the changes to index.html
+2. Commit and push to GitHub:
+   cd C:\Users\timke\wassite
+   git add .
+   git commit -m "Configure contact form with Formspree and reCAPTCHA"
+   git push
+
+3. Wait 1-2 minutes for GitHub Pages to rebuild
+4. Visit your website and test the contact form
+5. You should receive test emails at was_shakoor@hotmail.com
+
+
+TROUBLESHOOTING
+---------------
+- If form doesn't submit: Check browser console for errors (F12)
+- If emails don't arrive: Check spam folder, verify email in Formspree settings
+- If reCAPTCHA doesn't show: Verify the site key is correct and domain is added
+- If you see "Please complete the reCAPTCHA": Make sure to check the reCAPTCHA box before submitting
+
+
+FREE TIER LIMITS
+----------------
+- Formspree Free: 50 submissions/month (more than enough for most small businesses)
+- reCAPTCHA: Unlimited and completely free
+
+If you need more submissions, Formspree has affordable paid plans.
